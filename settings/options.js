@@ -5,6 +5,8 @@ module.exports = {
     protos: true,
     multiItemLines: true,
     globalExec: true,
+    ignoreInspect: false,
+    alphabeticalSorting: true,
     depth: 4
   },
   execution: {

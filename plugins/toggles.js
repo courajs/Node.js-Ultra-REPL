@@ -23,6 +23,16 @@ module.exports = [
     defaultTrigger: api.keybind('f5'),
     action: api.toggle('currentSettings', 'multiItemLines')
   },
+  { name: 'Ignore Custom Inspect',
+    help: 'Toggles whether custom inspection functions are used.',
+    defaultTrigger: api.keybind('alt+4'),
+    action: api.toggle('currentSettings', 'ignoreInspect')
+  },
+  { name: 'Alphabetical Sorting',
+    help: 'Toggle showing multiple properties/array items per line.',
+    defaultTrigger: api.keybind('alt+q'),
+    action: api.toggle('currentSettings', 'alphabeticalSorting')
+  },
   { name: 'Global/Local',
     help: 'Switch between running code in a private local scope or globally (both in current context',
     defaultTrigger: api.keybind('f6'),

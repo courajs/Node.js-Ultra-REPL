@@ -4,8 +4,9 @@ var white = R(255, 255, 255);
 var red = R(230, 0, 30);
 var blue = R(0, 20, 200);
 var yellow = R(255, 255, 0);
-var lightyellow = R(255, 255, 50);
-var darkyellow = R(180, 180, 0);
+var lightyellow = R(255, 255, 100);
+var mediumyellow = R(180, 180, 20);
+var darkyellow = R(75, 75, 10);
 var medblue = R(20,0,150);
 var chartreuse = R(40, 255, 0);
 var deeppink = R(180, 0, 130);
@@ -22,6 +23,7 @@ var mediumcyan = R(0,180,180);
 var orange = R(255, 180, 0);
 var lightblue = R(180, 180, 255);
 
+var greenyellow = R(200, 255, 0);
 var header = R(0,30,150).fg(white);
 
 module.exports = {
@@ -49,7 +51,7 @@ module.exports = {
     HString     : darkgreen,
     String      : R(0,200,50),
     HConstant   : darkyellow,
-    Constant    : R(255, 255, 150),
+    Constant    : lightyellow,
     FHConstant  : darkcyan,
     FConstant   : seagreen,
     FName       : lightblue,
@@ -63,6 +65,7 @@ module.exports = {
     // brackets
     Square      : hotpink,
     Curly       : orange,
+    Node        : greenyellow,
   },
   syntax: {
     curly           : blue,
@@ -71,10 +74,10 @@ module.exports = {
     punctuation     : R(220,220,220),
     string          : green,
     number          : green,
-    def             : darkyellow,
+    def             : mediumyellow,
     property        : mediumcyan,
     variable        : seagreen,
-    variable2       : darkyellow,
+    variable2       : mediumyellow,
     comment         : darkgray,
     operator        : brightred,
     conditional     : deeppink,
@@ -96,7 +99,7 @@ module.exports = {
   help: {
     intro: green,
     names: mediumcyan,
-    keybind: darkyellow,
+    keybind: mediumyellow,
     keyword: deeppink,
     command: darkgreen,
     keywords:  yellow
@@ -105,9 +108,9 @@ module.exports = {
     prompt: {
     separator: ['◊', darkgreen],
     end: ['»', seagreen],
-    '--': darkyellow,
+    '--': mediumyellow,
     '++': yellow,
-    number: darkyellow
+    number: mediumyellow
   },
   info: {
     context:    header,
