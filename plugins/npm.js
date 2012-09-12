@@ -1,10 +1,22 @@
 "use strict";
 
+var Module = require('module'),
+    path = require('path'),
+    fs = require('fs');
+
 var EventEmitter = require('events').EventEmitter;
 var chunk = require('../lib/utility/string-utils').chunk;
 var rainbow = require('repl-rainbow');
 var npm;
 var log = new EventEmitter;
+
+if (process.platform === 'win32') {
+  var globalPath = process.arch === 'ia32' ? 'C:\\Program Files (x86)\\nodejs' : 'C:\\Program Files\\nodejs';
+  globalPath = Module._nodeModulePaths(globalPath).filter(fs.existsSync)[0];
+  var npmPath = path.resolve(globalPath, 'npm');
+} else {
+  var npmPath = path.resolve(path.dirname(process.execPath), '..', 'lib', 'node_modules', 'npm');
+}
 
 
 function command(repl, params, cb){
@@ -20,7 +32,7 @@ function command(repl, params, cb){
 
 module.exports = {
   init: function(){
-    require('npm').load(function(e,NPM){
+    require(npmPath).load(function(e,NPM){
       NPM.on('output', function(){
         log.emit('message', NPM.output.message);
         NPM.output = null;
