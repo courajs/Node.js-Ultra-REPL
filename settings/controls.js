@@ -6,7 +6,7 @@ module.exports = function(keywords, command, keybind){
     'Previous Page'      : keybind('pgup'),
     'Clear Input'        : keybind('esc'),
     'Clear Screen'       : keybind('esc esc'),
-    'Exit'               : keybind('esc esc esc'),
+    'Exit'               : process.platform === 'win32' ? keybind('esc esc esc') : keybind('ctrl+c'),
     'Inspect Context'    : keybind('ctrl+z'),
     'Load Plugin'        : command('.plugin'),
 
@@ -43,7 +43,7 @@ module.exports = function(keywords, command, keybind){
     'Global/Local'       : keybind('f6'),
     'Depth--'            : keybind('alt+1'),
     'Depth++'            : keybind('alt+2'),
-    'Alphabetical Sorting': keybind('alt+q'),
+    'Alphabetize'        : keybind('alt+q'),
     'Colors'             : keybind('f9'),
     'Set Depth'          : command('.depth'),
 

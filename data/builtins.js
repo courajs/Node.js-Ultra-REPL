@@ -15,7 +15,7 @@ var b = module.exports = {
 
   node:     [ 'ArrayBuffer', 'Int8Array', 'Uint8Array', 'Uint8ClampedArray', 'Int16Array','Uint16Array',
               'Int32Array', 'Uint32Array', 'Float32Array', 'Float64Array', 'DataView',
-              'process', 'Buffer', 'setInterval', 'clearInterval', 'setTimeout',
+              'process', 'Buffer', 'setInterval', 'clearInterval', 'setTimeout', 'setImmediate', 'clearImmediate',
               'clearTimeout',  'escape', 'unescape' ],//,  'console' ],
 
   misc:     [ 'global', 'GLOBAL', 'root', '_', '__dirname', '__filename', 'module',
