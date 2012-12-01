@@ -2,6 +2,8 @@
 
 The goal of UltraREPL is to be a JavaScript development environment, not just a toy or a simple debugger. Developing JS code inside of JavaScript itself enables a lot of powerful options that are otherwise difficult or cumbersome. The problem is Node's existing REPL doesn't provide the tools needed to take advantage of this potential, and there's not really any other options aside from (albiet awesome) browser based environments like [Ace](http://ace.ajax.org/).
 
+Also see http://benvie.github.com/continuum/ for a similar web-based interface that uses a JavaScript bytecode virtual machine built in JavaScript. It allows deep debugging like inspecting local contexts, opcodes, and engine internals.
+
 # Installation and Startup
 
 UltraREPL is designed to work with zero configuration as long as Node is installed. To get it you can clone it from this repo or simply install it with npm:
