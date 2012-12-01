@@ -23,7 +23,8 @@ var white        = R(255, 255, 255),
     orange       = R(255, 180, 0),
     lightblue    = R(180, 180, 255),
     greenyellow  = R(200, 255, 0),
-    header       = R(0,30,150).fg(white);
+    header       = R(0,30,150).fg(white),
+    selection    = R(0, 0, 0).bg(R(100, 200, 255));
 
 module.exports = {
   error: red,
@@ -65,6 +66,10 @@ module.exports = {
     Square      : hotpink,
     Curly       : orange,
     Node        : greenyellow,
+    JSON        : orange,
+    Math        : orange,
+    global      : chartreuse,
+    process     : deeppink
   },
   syntax: {
     curly           : blue,
@@ -104,12 +109,13 @@ module.exports = {
     keywords:  yellow
   },
   intro: [yellow, brightred ],
-    prompt: {
+  prompt: {
     separator: ['◊', darkgreen],
     end: ['»', seagreen],
     '--': mediumyellow,
     '++': yellow,
-    number: mediumyellow
+    number: mediumyellow,
+    selection: selection
   },
   info: {
     context:    header,

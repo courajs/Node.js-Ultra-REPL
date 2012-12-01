@@ -19,6 +19,12 @@ module.exports = [
       }
     }
   },
+  cmd('Select Left',        'shift+left'),
+  cmd('Select Right',       'shift+right'),
+  cmd('Select Word Left',   'ctrl+shift+left'),
+  cmd('Select Word Right',  'ctrl+shift+right'),
+  cmd('Select Line Left',   'shift+home'),
+  cmd('Select Line Right',  'shift+end'),
   cmd('Delete Left',        'bksp'),
   cmd('Delete Right',       'del'),
   cmd('Delete Word Left',   'ctrl+bksp'),
@@ -34,7 +40,6 @@ module.exports = [
   cmd('History Prev',       'up'),
   cmd('History Next',       'down'),
   cmd('Line',               'enter'),
-  //cmd('Tab Complete',       'tab'),
 ];
 
 

@@ -29,11 +29,18 @@ module.exports = function(keywords, command, keybind){
     'Line Left'          : keybind('home'),
     'Line Right'         : keybind('end'),
 
+    'Select Left'        : keybind('shift+left'),
+    'Select Right'       : keybind('shift+right'),
+    'Select Word Left'   : keybind('ctrl+shift+left'),
+    'Select Word Right'  : keybind('ctrl+shift+right'),
+    'Select Line Left'   : keybind('shift+home'),
+    'Select Line Right'  : keybind('shift+end'),
+
     'History Prev'       : keybind('up'),
     'History Next'       : keybind('down'),
 
     'Line'               : keybind('enter'),
-    //'Tab Complete'       : keybind('tab'),
+    'Tab Complete'       : keybind('tab'),
 
     // Toggles
     'Hiddens'            : keybind('f2'),
