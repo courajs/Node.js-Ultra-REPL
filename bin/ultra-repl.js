@@ -1,4 +1,4 @@
-
+#!/usr/bin/env node
 var createREPL = require('../'),
     net = require('net'),
     cp = require('child_process'),
