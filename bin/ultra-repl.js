@@ -39,7 +39,7 @@ function putty(){
   }).listen(1337);
 
   var puttyPath = path.resolve(__dirname, 'putty.exe');
-  if (path.existsSync(puttyPath)) {
+  if (fs.existsSync(puttyPath)) {
     cp.exec('"'+path.resolve(__dirname, 'putty.exe')+'" -load "UltraREPL"', function(putty){
       putty.on('exit', process.exit);
     });

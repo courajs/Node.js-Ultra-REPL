@@ -1,14 +1,13 @@
 "use strict";
 
-var Module = require('module'),
-    path = require('path'),
-    fs = require('fs');
-
-var EventEmitter = require('events').EventEmitter;
-var chunk = require('../lib/utility/string-utils').chunk;
-var rainbow = require('repl-rainbow');
-var npm;
-var log = new EventEmitter;
+var Module       = require('module'),
+    path         = require('path'),
+    fs           = require('fs'),
+    chunk        = require('../lib/utility/string-utils').chunk,
+    rainbow      = require('repl-rainbow'),
+    EventEmitter = process.EventEmitter,
+    npm,
+    log = new EventEmitter;
 
 if (process.platform === 'win32') {
   var globalPath = process.arch === 'ia32' ? 'C:\\Program Files (x86)\\nodejs' : 'C:\\Program Files\\nodejs';

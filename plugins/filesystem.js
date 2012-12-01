@@ -1,4 +1,4 @@
-var exists = fs.existsSync || path.existsSync;
+var exists = fs.existsSync;
 
 
 var hidden = require('../lib/utility/object-utils').lazyProperty;

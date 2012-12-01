@@ -1,5 +1,5 @@
-var Results = require('../lib/Results');
-var Script = require('../lib/Script');
+var Results = require('../lib/Results'),
+    Script = require('../lib/Script');
 
 
 
