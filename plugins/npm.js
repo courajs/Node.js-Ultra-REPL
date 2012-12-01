@@ -59,12 +59,12 @@ module.exports = {
   }]
 }
 
-var _header      = rainbow('#f03').bg('#000');
-var _count       = rainbow('#800').under();
-var _name        = rainbow('#06a').fg('#cfc');
-var _maintainers = rainbow('#970');
-var _keywords    = rainbow('#3a3');
-var _date        = rainbow('#0fa').gradient('#042', 13);
+var _header      = rainbow('#f03').bg('#000'),
+    _count       = rainbow('#800').under(),
+    _name        = rainbow('#06a').fg('#cfc'),
+    _maintainers = rainbow('#970'),
+    _keywords    = rainbow('#3a3'),
+    _date        = rainbow('#0fa').gradient('#042', 13);
 
 
 

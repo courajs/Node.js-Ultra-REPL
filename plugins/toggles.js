@@ -47,14 +47,6 @@ module.exports = [
       this.refresh();
     }
   },
-  { name: 'Mouse',
-    help: 'Toggle mouse reporting.',
-    defaultTrigger: api.keybind('alt+m'),
-    action: function(){
-      var on = this.rli.toggleMouse() ? '++' : '--';
-      this.timedPrompt('mouse' + on, styling.prompt[on]);
-    }
-  },
   { name: 'Depth--',
     help: 'Decrease inspector recurse depth',
     defaultTrigger: api.keybind('alt+1'),

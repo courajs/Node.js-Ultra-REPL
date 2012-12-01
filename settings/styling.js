@@ -1,30 +1,29 @@
 var R = require('repl-rainbow');
 
-var white = R(255, 255, 255);
-var red = R(230, 0, 30);
-var blue = R(0, 20, 200);
-var yellow = R(255, 255, 0);
-var lightyellow = R(255, 255, 100);
-var mediumyellow = R(180, 180, 20);
-var darkyellow = R(75, 75, 10);
-var medblue = R(20,0,150);
-var chartreuse = R(40, 255, 0);
-var deeppink = R(180, 0, 130);
-var gray = R(150, 150, 150);
-var darkgray = R(80, 80, 80);
-var hotpink = R(255, 0, 150);
-var brightgreen = R(0, 255, 50);
-var green = R(0, 220, 30);
-var darkgreen = R(0, 160, 20);
-var brightred = R(255, 0, 30);
-var seagreen = R(0, 255, 220);
-var darkcyan = R(0,100,100);
-var mediumcyan = R(0,180,180);
-var orange = R(255, 180, 0);
-var lightblue = R(180, 180, 255);
-
-var greenyellow = R(200, 255, 0);
-var header = R(0,30,150).fg(white);
+var white        = R(255, 255, 255),
+    red          = R(230, 0, 30),
+    blue         = R(0, 20, 200),
+    yellow       = R(255, 255, 0),
+    lightyellow  = R(255, 255, 100),
+    mediumyellow = R(180, 180, 20),
+    darkyellow   = R(75, 75, 10),
+    medblue      = R(20,0,150),
+    chartreuse   = R(40, 255, 0),
+    deeppink     = R(180, 0, 130),
+    gray         = R(150, 150, 150),
+    darkgray     = R(80, 80, 80),
+    hotpink      = R(255, 0, 150),
+    brightgreen  = R(0, 255, 50),
+    green        = R(0, 220, 30),
+    darkgreen    = R(0, 160, 20),
+    brightred    = R(255, 0, 30),
+    seagreen     = R(0, 255, 220),
+    darkcyan     = R(0,100,100),
+    mediumcyan   = R(0,180,180),
+    orange       = R(255, 180, 0),
+    lightblue    = R(180, 180, 255),
+    greenyellow  = R(200, 255, 0),
+    header       = R(0,30,150).fg(white);
 
 module.exports = {
   error: red,

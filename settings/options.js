@@ -20,7 +20,6 @@ module.exports = {
     'contexts',
     'repldev',
     'library',
-    'clipboard',
     'npm',
   ]
 };
