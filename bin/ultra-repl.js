@@ -5,8 +5,6 @@ var createREPL = require('../'),
     fs = require('fs'),
     path = require('path');
 
-fs.existsSync || (fs.existsSync = path.existsSync);
-
 
 if (process.platform === 'win32') {
   if (fs.existsSync('PuTTY.reg')) {
@@ -40,9 +38,14 @@ function putty(){
     }));
   }).listen(1337);
 
-  cp.exec('"'+path.resolve(__dirname, 'putty.exe')+'" -load "UltraREPL"', function(putty){
-    putty.on('exit', process.exit);
-  });
+  var puttyPath = path.resolve(__dirname, 'putty.exe');
+  if (path.existsSync(puttyPath)) {
+    cp.exec('"'+path.resolve(__dirname, 'putty.exe')+'" -load "UltraREPL"', function(putty){
+      putty.on('exit', process.exit);
+    });
+  } else {
+    initREPL(createREPL());
+  }
 }
 
 
