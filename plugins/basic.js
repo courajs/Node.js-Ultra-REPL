@@ -53,25 +53,33 @@ module.exports = [
     help: 'Context aware tab completion.',
     defaultTrigger: api.keybind('tab'),
     action: function(){
-      var cursor = this.rli.cursor;
-      var line = this.rli.takeLine();
-      var regex = new RegExp('^'+line);
+      var cursor = this.rli.cursor,
+          line = this.rli.takeLine(),
+          parts = line.split('.'),
+          prop = parts.pop(),
+          regex = new RegExp('^'+prop),
+          height = this.height - 2;
+
+      if (parts.length) {
+        line = parts.join('.') + '.';
+        try {
+          var obj = this.context.ctx.eval(parts.join('.'));
+        } catch (e) {
+          return e;
+        }
+      } else {
+        line = '';
+        var obj = this.context.global;
+      }
+
       var introspect = this.context.introspect;
-      var spected = introspect(this.context.global);
-      var descs = spected.describe().filter(function(desc){
+      obj = introspect(obj);
+
+      var descs = obj.describe().filter(function(desc){
         return regex.test(desc.name);
       }).toArray().sort(function(a, b){
-        if (!a) {
-          return !b ? 0 : -1;
-        } else if (!b) {
-          return 1;
-        } else if (a.name === b.name) {
-          return 0;
-        } else {
-          return a.name > b.name ? -1 : 1;
-        }
+        return a.name === b.name ? 0 : a.name > b.name ? -1 : 1;
       });
-      var height = this.height - 2;
       var first = descs.pop();
 
       if (descs.length > height) {
@@ -104,7 +112,9 @@ module.exports = [
 
       this.resetScreen();
       this.writer(out);
-      this.rli.line = first ? first.name : '';
+      this.rli.line = line + (first ? first.name : '');
+      var len = this.rli.line.alength;
+      cursor = Math.min(len, cursor);
       this.rli.cursor = cursor;
       this.rli.selectionStart = cursor;
       this.rli.selectionEnd = this.rli.line.alength;
