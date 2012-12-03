@@ -43,9 +43,10 @@ module.exports = [
   },
   { name: 'Exit',
     help: 'Exit the REPL.',
-    defaultTrigger: api.keybind('esc esc esc'),
+    defaultTrigger: api.keybind('ctrl+d'),
     action: function(){
       this.rli.close();
+      console.log('');
       process.exit();
     }
   },

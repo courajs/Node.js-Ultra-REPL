@@ -6,7 +6,7 @@ module.exports = function(keywords, command, keybind){
     'Previous Page'      : keybind('pgup'),
     'Clear Input'        : keybind('esc'),
     'Clear Screen'       : keybind('esc esc'),
-    'Exit'               : process.platform === 'win32' ? keybind('esc esc esc') : keybind('ctrl+c'),
+    'Exit'               : keybind('ctrl+d'),
     'Inspect Context'    : keybind('ctrl+z'),
     'Load Plugin'        : command('.plugin'),
 
