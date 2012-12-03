@@ -65,6 +65,7 @@ module.exports = [
           cols = [],
           widths = [],
           items = [],
+          title = '',
           tallest = 0;
 
       if (line[0] === '.' || ~line.indexOf(/[\/\\]/)) {
@@ -82,6 +83,8 @@ module.exports = [
           var files = [],
               regex = new RegExp('^'+last),
               first = '';
+
+          title = 'Directory listing for ' + path.resolve(main);
 
           fs.readdirSync(main).forEach(function(name){
             if (!first && regex.test(name)) {
@@ -102,6 +105,12 @@ module.exports = [
               files.push(stat);
             }
           });
+          items.sort(function(a, b){
+            return a.name === b.name ? 0 : a.name < b.name ? -1 : 1;
+          });
+          files.sort(function(a, b){
+            return a.name === b.name ? 0 : a.name < b.name ? -1 : 1;
+          });
           files.forEach(function(stat){
             items.push({
               name: stat.name,
@@ -119,16 +128,20 @@ module.exports = [
             prop = parts.pop(),
             regex = new RegExp('^'+prop);
         if (parts.length) {
-          line = parts.join('.') + '.';
+          line = parts.join('.');
+          title = 'Auto-completions for "'+line+'.'+prop+'"';
           try {
-            var obj = this.context.ctx.eval(parts.join('.'));
+            var obj = this.context.ctx.eval(line);
           } catch (e) {
             return e;
           }
+          line += '.';
         } else {
           line = '';
+          title = 'Auto-completions';
           var obj = this.context.global;
         }
+
 
         var introspect = this.context.introspect;
         obj = introspect(obj);
@@ -162,13 +175,14 @@ module.exports = [
 
         var out = crossColumns(cols, tallest).join('\n');
       } else {
-        var out = formatColumn(introspect, items, this.width - 3);
+        var out = formatColumn(introspect, items, columnWidth(items));
         out = new Array(this.height - 1 - out.length).join('\n') + out.join('\n');
       }
 
 
       this.resetScreen();
-      this.writer(out);
+
+      this.writer(new Results.Success(this.context.current, null, out, null, title));
       this.rli.line = line + (first ? first.name : '');
       var len = this.rli.line.alength;
       cursor = Math.min(len, cursor);
@@ -197,7 +211,7 @@ function crossColumns(cols, height){
 function columnWidth(col){
   return col.reduce(function(longest, item){
     return Math.max(longest, item.name.length);
-  }, 0) + 5;
+  }, 0) + 1;
 }
 
 function formatColumn(introspect, col, width){
@@ -210,9 +224,9 @@ function formatColumn(introspect, col, width){
         return '   '+color(desc.name.pad(width));
       }
     } else if (desc.type === 'file') {
-      return '   '+file(desc.name.pad(width)) + ' ' + desc.size.pad(10);
+      return '  '+file(desc.name.pad(width)) + desc.size.pad(-8);
     } else if (desc.type === 'directory') {
-      return '   '+dir(desc.name.pad(width)) + ' ' + desc.size.pad(10);
+      return '  '+dir(desc.name.pad(width)) + desc.size.pad(-8);
     }
 
     return '   '+styling.inspector.Name(desc.name.pad(width));
@@ -245,5 +259,6 @@ function widest(arr, field){
 function filesize(s){
   if (isNaN(s) || s <= 0) return '0b';
   for (var b=0; s >= 1024; b++) s >>= 10;
-  return (b ? s.toFixed(2)+' '+' kmgt'[b] : s+' ')+'b';
+  s |= 0;
+  return (b ? s+' '+' kmgt'[b] : s+'  ')+'b';
 }
