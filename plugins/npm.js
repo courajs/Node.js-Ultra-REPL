@@ -4,7 +4,6 @@ var Module       = require('module'),
     path         = require('path'),
     fs           = require('fs'),
     chunk        = require('../lib/utility/string-utils').chunk,
-    rainbow      = require('repl-rainbow'),
     EventEmitter = process.EventEmitter,
     npm,
     log = new EventEmitter;

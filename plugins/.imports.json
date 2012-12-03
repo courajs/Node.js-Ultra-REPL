@@ -1,6 +1,7 @@
 [
   {
     "providers": [ "../lib/api.js",
+                   "../lib/utility/rainbow.js",
                    "../settings/",
                    "../data/",
                    "fs",

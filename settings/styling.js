@@ -1,4 +1,4 @@
-var R = require('repl-rainbow');
+var R = require('../lib/utility/rainbow');
 
 var white        = R(255, 255, 255),
     red          = R(230, 0, 30),

@@ -1,5 +1,4 @@
-var Results = require('../lib/Results'),
-    rainbow = require('repl-rainbow');
+var Results = require('../lib/Results');
 
 module.exports = [
   { name: 'Command List',
@@ -62,8 +61,15 @@ module.exports = [
       var descs = spected.describe().filter(function(desc){
         return regex.test(desc.name);
       }).toArray().sort(function(a, b){
-        if (a.name === b.name) return 0;
-        return a.name > b.name ? -1 : 1;
+        if (!a) {
+          return !b ? 0 : -1;
+        } else if (!b) {
+          return 1;
+        } else if (a.name === b.name) {
+          return 0;
+        } else {
+          return a.name > b.name ? -1 : 1;
+        }
       });
       var height = this.height - 2;
       var first = descs.pop();
@@ -89,7 +95,7 @@ module.exports = [
           return formatColumn(introspect, col, widths[i]);
         });
 
-        var out = crossColumns(cols, tallest).join('\n');;
+        var out = crossColumns(cols, tallest).join('\n');
       } else {
         var out = formatColumn(introspect, descs, this.width - 3);
         out = new Array(this.height - 1 - out.length).join('\n') + out.join('\n');
@@ -98,10 +104,10 @@ module.exports = [
 
       this.resetScreen();
       this.writer(out);
-      this.rli.line = first.name;
+      this.rli.line = first ? first.name : '';
       this.rli.cursor = cursor;
       this.rli.selectionStart = cursor;
-      this.rli.selectionEnd = first.name.length;
+      this.rli.selectionEnd = this.rli.line.alength;
       this.rli.refreshLine();
     }
   }

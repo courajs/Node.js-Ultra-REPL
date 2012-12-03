@@ -1,4 +1,4 @@
-var C = Object.getPrototypeOf(require('repl-rainbow')(0,0,0));
+var C = Object.getPrototypeOf(rainbow(0,0,0));
 var modes = [256,16,0];
 
 
