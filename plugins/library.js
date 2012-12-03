@@ -75,7 +75,8 @@ module.exports = {
       }
 
       if (code) {
-        var result = this.context.current.run(code);
+        var result = this.context.current.setupModule(file.path);
+        this.context.current.run(code);
         result.code = code;
         result.label = 'Result';
         this.emit('load', result)

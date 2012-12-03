@@ -1,6 +1,3 @@
-var exists = fs.existsSync;
-
-
 var hidden = require('../lib/utility/object-utils').lazyProperty;
 
 module.exports = [

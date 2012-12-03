@@ -1,4 +1,9 @@
-var Results = require('../lib/Results');
+var Results = require('../lib/Results'),
+    fs = require('fs'),
+    path = require('path');
+
+var dir = rainbow(255, 180, 30),
+    file = rainbow(255, 255, 200);
 
 module.exports = [
   { name: 'Command List',
@@ -45,8 +50,8 @@ module.exports = [
     help: 'Exit the REPL.',
     defaultTrigger: api.keybind('ctrl+d'),
     action: function(){
-      this.rli.close();
       console.log('');
+      this.rli.close();
       process.exit();
     }
   },
@@ -55,48 +60,99 @@ module.exports = [
     defaultTrigger: api.keybind('tab'),
     action: function(){
       var cursor = this.rli.cursor,
+          height = this.height - 2,
           line = this.rli.takeLine(),
-          parts = line.split('.'),
-          prop = parts.pop(),
-          regex = new RegExp('^'+prop),
-          height = this.height - 2;
+          cols = [],
+          widths = [],
+          items = [],
+          tallest = 0;
 
-      if (parts.length) {
-        line = parts.join('.') + '.';
-        try {
-          var obj = this.context.ctx.eval(parts.join('.'));
-        } catch (e) {
-          return e;
+      if (line[0] === '.' || ~line.indexOf(/[\/\\]/)) {
+        var parts = line.split(/[\/\\]+/),
+            last = parts.pop(),
+            main = parts.join('/');
+
+        if (fs.existsSync(main)) {
+          if (fs.existsSync(line) && fs.statSync(line).isDirectory()) {
+            main = line;
+            last = '';
+          } else {
+            line = main + '/';
+          }
+          var files = [],
+              regex = new RegExp('^'+last),
+              first = '';
+
+          fs.readdirSync(main).forEach(function(name){
+            if (!first && regex.test(name)) {
+              first = name;
+            }
+            widest = Math.max(name.length, widest)
+            var stat = fs.statSync(main+'/'+name);
+            if (stat.isDirectory()) {
+              items.push({
+                name: name,
+                type: 'directory',
+                size: ''+fs.readdirSync(main+'/'+name).length,
+                modified: stat.mtime,
+                accessed: stat.atime
+              });
+            } else if (stat.isFile()) {
+              stat.name = name;
+              files.push(stat);
+            }
+          });
+          files.forEach(function(stat){
+            items.push({
+              name: stat.name,
+              type: 'file',
+              size: filesize(stat.size),
+              modified: stat.mtime,
+              accessed: stat.atime
+            });
+          });
+          first = { name: first };
         }
+
       } else {
-        line = '';
-        var obj = this.context.global;
+        var parts = line.split('.'),
+            prop = parts.pop(),
+            regex = new RegExp('^'+prop);
+        if (parts.length) {
+          line = parts.join('.') + '.';
+          try {
+            var obj = this.context.ctx.eval(parts.join('.'));
+          } catch (e) {
+            return e;
+          }
+        } else {
+          line = '';
+          var obj = this.context.global;
+        }
+
+        var introspect = this.context.introspect;
+        obj = introspect(obj);
+
+        items = obj.describe().filter(function(desc){
+          return regex.test(desc.name);
+        }).toArray().sort(function(a, b){
+          return a.name === b.name ? 0 : a.name > b.name ? -1 : 1;
+        });
+        var first = items.pop();
       }
 
-      var introspect = this.context.introspect;
-      obj = introspect(obj);
 
-      var descs = obj.describe().filter(function(desc){
-        return regex.test(desc.name);
-      }).toArray().sort(function(a, b){
-        return a.name === b.name ? 0 : a.name > b.name ? -1 : 1;
-      });
-      var first = descs.pop();
+      if (items.length > height) {
 
-      if (descs.length > height) {
-        var cols = [],
-            widths = [],
-            tallest = 0;
-
-        while (descs.length > 0) {
-          var col = descs.slice(-height);
+        while (items.length > 0) {
+          var col = items.slice(-height);
           tallest = Math.max(tallest, col.length);
           cols.push(col);
           widths.push(columnWidth(col));
-          if (descs.length > height) {
-            descs.length -= height;
+          if (items.length > height) {
+            items.length -= height;
           } else {
-            descs.length = 0;
+            items.length = 0;
           }
         }
 
@@ -106,7 +162,7 @@ module.exports = [
 
         var out = crossColumns(cols, tallest).join('\n');
       } else {
-        var out = formatColumn(introspect, descs, this.width - 3);
+        var out = formatColumn(introspect, items, this.width - 3);
         out = new Array(this.height - 1 - out.length).join('\n') + out.join('\n');
       }
 
@@ -153,6 +209,10 @@ function formatColumn(introspect, col, width){
       if (color) {
         return '   '+color(desc.name.pad(width));
       }
+    } else if (desc.type === 'file') {
+      return '   '+file(desc.name.pad(width)) + ' ' + desc.size.pad(10);
+    } else if (desc.type === 'directory') {
+      return '   '+dir(desc.name.pad(width)) + ' ' + desc.size.pad(10);
     }
 
     return '   '+styling.inspector.Name(desc.name.pad(width));
@@ -180,4 +240,10 @@ function widest(arr, field){
     b = b[field].length;
     return a > b ? a : b;
   }, 0);
+}
+
+function filesize(s){
+  if (isNaN(s) || s <= 0) return '0b';
+  for (var b=0; s >= 1024; b++) s >>= 10;
+  return (b ? s.toFixed(2)+' '+' kmgt'[b] : s+' ')+'b';
 }
