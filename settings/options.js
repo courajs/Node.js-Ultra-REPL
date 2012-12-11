@@ -16,10 +16,9 @@ module.exports = {
   autoload: [
     'basic',
     'navigation',
-    'toggles',
     'contexts',
-    'repldev',
     'library',
     'npm',
+    'toggles',
   ]
 };
