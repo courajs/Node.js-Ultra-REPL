@@ -60,7 +60,7 @@ module.exports = [
     defaultTrigger: api.keybind('tab'),
     action: function(){
       var cursor = this.rli.cursor,
-          height = this.height - 2,
+          height = this.height - 4,
           line = this.rli.takeLine(),
           cols = [],
           widths = [],
@@ -176,7 +176,7 @@ module.exports = [
         var out = crossColumns(cols, tallest).join('\n');
       } else {
         var out = formatColumn(introspect, items, columnWidth(items));
-        out = new Array(this.height - 1 - out.length).join('\n') + out.join('\n');
+        out = new Array(height + 1 - out.length).join('\n') + out.join('\n');
       }
 
 
