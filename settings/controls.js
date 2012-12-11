@@ -1,4 +1,6 @@
-module.exports = function(keywords, command, keybind){
+module.exports = controls;
+
+function controls(keywords, command, keybind){
   return {
     //General Usage
     'Command List'       : keybind('f1'),
