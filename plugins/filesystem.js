@@ -1,17 +1,19 @@
 var hidden = require('../lib/utility/object-utils').lazyProperty;
 
-module.exports = [
-  { name: 'Current Directory',
-    help: 'List the files in the current working directory',
-    defaultTrigger: api.command('.dir'),
-    action: function(cmd, dir){
-      dir = readStats(path.resolve(dir.trim() || process.cwd()));
-      this.context.ctx.dir = dir;
-      return dir.display()+'';
+module.exports = {
+  init: function(){},
+  commands: [
+    { name: 'Current Directory',
+      help: 'List the files in the current working directory',
+      defaultTrigger: api.command('.dir'),
+      action: function(cmd, dir){
+        dir = readStats(path.resolve(dir.trim() || process.cwd()));
+        this.context.ctx.dir = dir;
+        return dir.display()+'';
+      }
     }
-  },
-];
-
+  ]
+};
 
 function Entity(){}
 Entity.prototype = {

@@ -21,18 +21,21 @@ var CoffeeContext = heritable({
   }
 });
 
-module.exports = [{
-  name: 'Create Coffee Context',
-  help: 'Create a new context that evaluates input as CoffeeScript',
-  defaultTrigger: api.keybind('alt+c'),
-  action: function(){
-    var result = this.context.add(new CoffeeContext);
-    if (isError(result)) {
-      result = result.message.color(style.error);
-    } else {
-      result = 'created CoffeeContext '.color(style.context.create) + result.name;
+module.exports = {
+  init: function(){},
+  commands: [{
+    name: 'Create Coffee Context',
+    help: 'Create a new context that evaluates input as CoffeeScript',
+    defaultTrigger: api.keybind('alt+c'),
+    action: function(){
+      var result = this.context.add(new CoffeeContext);
+      if (isError(result)) {
+        result = result.message.color(style.error);
+      } else {
+        result = 'created CoffeeContext '.color(style.context.create) + result.name;
+      }
+      this.rli.timedWrite('topright', result, 'bgbblack');
+      this.refresh();
     }
-    this.rli.timedWrite('topright', result, 'bgbblack');
-    this.refresh();
-  }
-}]
+  }]
+};
